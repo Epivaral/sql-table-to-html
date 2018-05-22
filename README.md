@@ -1,8 +1,9 @@
-  Convert any table or select query to a html table format
-  FROM: https://github.com/Epivaral/sql-table-to-html
+	Convert any table or select query to a html table format
+  	
+	FROM: https://github.com/Epivaral/sql-table-to-html
   
-  SP: sp_TabletoHTML
-	Version: 1.0
+  	SP: sp_TabletoHTML
+  	Version: 1.0
 	AUTHOR: Eduardo Pivaral (www.sqlguatemala.com)
 	MIT License
 	

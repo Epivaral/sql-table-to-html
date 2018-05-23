@@ -45,20 +45,26 @@ you can split them in various executions.
 ### SAMPLE EXECUTION:
 -----------------
 
-Most basic usage, table name and all defaults to query window
+**Most basic usage, table name and all defaults to query window**
 ```SQL
 EXEC sp_TabletoHTML @stTable = 'sys.dm_os_windows_info'
 ```
+Output:
 
-SELECT QUERY, all defaults
+ ![table output ](/images/1.JPG)
+
+**SELECT QUERY, all defaults**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
 EXEC sp_TabletoHTML @stTable = @SQLSentence,
 	@RawTableStyle = @st OUTPUT
 ```
+Output:
 
-Remove column name
+ ![table output ](/images/2.JPG)
+
+**Remove column name**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
@@ -66,8 +72,11 @@ EXEC sp_TabletoHTML @stTable = @SQLSentence,
 	@includeColumnName = 0,
 	@RawTableStyle = @st OUTPUT
 ```
+Output:
 
-Gray style with columns
+ ![table output ](/images/3.JPG)
+
+**Gray style with columns**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
@@ -75,8 +84,11 @@ EXEC sp_TabletoHTML @stTable = @SQLSentence,
 	@TableStyle = 2,
 	@RawTableStyle = @st OUTPUT
 ```
+Output:
 
-Lightblue with columns
+ ![table output ](/images/4.JPG)
+
+**Lightblue with columns**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
@@ -84,8 +96,11 @@ EXEC sp_TabletoHTML @stTable = @SQLSentence,
 	@TableStyle = 3,
 	@RawTableStyle = @st OUTPUT
 ```
+Output:
 
-Remove style and columns
+ ![table output ](/images/5.JPG)
+
+**Remove style and columns**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
@@ -94,4 +109,7 @@ EXEC sp_TabletoHTML @stTable = @SQLSentence,
 	@includeColumnName = 0,
 	@RawTableStyle = @st OUTPUT
 ```
+Output:
+
+ ![table output ](/images/6.JPG)
 -----------------

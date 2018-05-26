@@ -7,7 +7,7 @@
 
 **Version:** 1.0
 
-**AUTHOR:** Eduardo Pivaral [sqlguatemala.com](www.sqlguatemala.com)
+**AUTHOR:** Eduardo Pivaral [sqlguatemala.com](http://www.sqlguatemala.com)
 
 **MIT License**
 

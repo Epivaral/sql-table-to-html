@@ -5,7 +5,7 @@
 
 **SP:** sp_TabletoHTML
 
-**Version:** 1.0
+**Version:** 1.1
 
 **AUTHOR:** Eduardo Pivaral [sqlguatemala.com](http://www.sqlguatemala.com)
 
@@ -38,7 +38,7 @@ you can split them in various executions.
 - **@stTable:** input table or SELECT query, a schema.object or SELECT query format
 - **@RawTableStyle:** OUTPUT variable, to use in another process or programatically
 - **@includeColumnName:**  0=does not include column names | 1=include column names (DEFAULT)
-- **@TableStyle:** 0=no style | 1=black borders (DEFAULT) | 2=grey style | 3=lightblue style
+- **@TableStyle:** 0=no style | 1=black borders (DEFAULT) | 2=grey style | 3=lightblue style | 4=zebra-striped table
 -----------
 
 
@@ -99,7 +99,19 @@ EXEC sp_TabletoHTML @stTable = @SQLSentence,
 Output:
 
  ![table output ](/images/5.JPG)
+ 
+**zebra-striped table**
+```SQL
+SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'
 
+EXEC sp_TabletoHTML @stTable = @SQLSentence,
+	@TableStyle = 4,
+	@RawTableStyle = @st OUTPUT
+```
+Output:
+
+ ![table output ](/images/7.JPG)
+ 
 **Remove style and columns**
 ```SQL
 SET @SQLSentence = 'SELECT name,state_desc ,create_date,collation_name FROM sys.databases'

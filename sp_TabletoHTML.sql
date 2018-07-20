@@ -14,7 +14,7 @@ BEGIN
 	FROM: https://github.com/Epivaral/sql-table-to-html
 
 	SP: sp_TabletoHTML
-	Version: 1.0
+	Version: 1.1
 	AUTHOR: Eduardo Pivaral (www.sqlguatemala.com)
 	MIT License
 	
@@ -45,7 +45,7 @@ BEGIN
 	@stTable: input table or SELECT query, a schema.object or SELECT query format
 	@RawTableStyle: OUTPUT variable, to use in another process or programatically
 	@includeColumnName:  0=does not include column names | 1=include column names (DEFAULT)
-	@TableStyle: 0=no style | 1=black borders (DEFAULT) | 2=grey style | 3=lightblue style
+	@TableStyle: 0=no style | 1=black borders (DEFAULT) | 2=grey style | 3=lightblue style | 4=zebra-striped table
 	-----------
 
 
@@ -99,6 +99,7 @@ BEGIN
 	DECLARE @ColumnNamesHTML AS NVARCHAR(max) = ''
 	DECLARE @CSSTableStyle AS NVARCHAR(max) = ''
 	DECLARE @SelectStatement as NVARCHAR(max) = ''
+	DECLARE @STErrorMessage as NVARCHAR(max)=''
 	/************* END INTERNAL PARAMETERS *************/
 			
 	IF(CHARINDEX('SELECT',@stTable)>0)
@@ -108,13 +109,15 @@ BEGIN
 	ELSE
 	BEGIN
 		 SET @SelectStatement= 'SELECT tbl1.* into ##rowstablePreHTML FROM ' + @stTable + ' tbl1'
+		 
 	END
 	
 	BEGIN TRY
 		EXEC sp_executesql	@SelectStatement --Loading table contents on temp table
 	END TRY  
 	BEGIN CATCH
-		THROW 50000,'Syntax related issue with your input, use "<schema>.<table>" or "SELECT <columns> FROM <TABLE>" format',1;
+		SET @STErrorMessage ='Syntax related issue with your input, use "<schema>.<table>" or "SELECT <columns> FROM <TABLE>" format. ERROR REPORTED: '+ERROR_MESSAGE();
+		THROW 50000, @STErrorMessage ,1;
 		RETURN;
 	END CATCH; 
 
@@ -177,6 +180,15 @@ BEGIN
 	</style>'
 	END
 
+	IF (@TableStyle = 4) -- zebra-striped table
+	BEGIN
+		SET @CSSTableStyle = '<style type="text/css">   
+		table, td, tr {border: 1px solid #dddddd; padding: 3px; color: #555555; border-collapse: collapse;}   
+		th {background-color: #CCCCCC;}  
+		tr:nth-child(even) {background-color: #F7F7F7} 
+		</style>'
+	END
+
 	IF(@includeColumnName =1) --IF Column names must be included
 	BEGIN
 		SET @RawTableStyle = @ColumnNamesHTML + @RawTableStyle
@@ -188,4 +200,3 @@ BEGIN
 
 END
 GO
-
